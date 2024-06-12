@@ -1,4 +1,2 @@
 #!/bin/bash
-content=$(ls ~)
-
-echo "$content"
+echo $(ls ~)
