@@ -1,2 +1,2 @@
 #!/bin/bash
-echo $(ls ~)
+echo "Applicatins Documents Dropbox Movies Pictures Desktop Downloads Library Music Public"
