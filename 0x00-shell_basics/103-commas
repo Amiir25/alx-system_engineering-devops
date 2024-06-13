@@ -1,2 +1,2 @@
 #!/bin/bash
-printf "%s\n" "$(ls -amF)"
+echo "$(ls -1 | tr '\n' ',' | sed 's/,$//')"
