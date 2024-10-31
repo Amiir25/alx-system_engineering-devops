@@ -3,7 +3,6 @@
 
 for file in *
 do
-    echo "$file"
-
-    sed 's/-//'
+    modified="${file#*-}"
+    echo "$modified"
 done
