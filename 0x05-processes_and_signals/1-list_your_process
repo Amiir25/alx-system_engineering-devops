@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-# This script prints a list currently running processes.
-
-ps -e --forest -o user,pid,ppid,tty,time,cmd
