@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# This script prints its own PID.
+
+PID=$(pgrep -x "$0-what-is-my-pid")
+
+if [ -n "$PID" ]; then
+    echo $PID
+
+fi
