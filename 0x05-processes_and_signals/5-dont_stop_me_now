@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Terminates a process using 'kill' command.
+
+process="4-to_infinity_and_beyond"
+
+PID=$(pgrep "$process")
+kill -15 $PID
