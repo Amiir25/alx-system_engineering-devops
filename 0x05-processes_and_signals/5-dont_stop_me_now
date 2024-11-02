@@ -4,4 +4,10 @@
 process="4-to_infinity_and_beyond"
 
 PID=$(pgrep "$process")
-kill -15 $PID
+
+if [ -z "$PID" ]; then
+    echo 'Not running'
+    exit 1
+else
+    kill "$PID"
+fi
