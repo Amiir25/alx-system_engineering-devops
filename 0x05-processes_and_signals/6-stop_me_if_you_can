@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Terminates a process using 'pkill' command.
+
+process="4-to_infinity_and_beyond"
+
+if [ -z "$process" ]; then
+    echo 'Not running'
+    exit 1
+else
+    pkill "$process"
+
+fi
