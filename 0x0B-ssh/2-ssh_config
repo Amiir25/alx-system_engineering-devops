@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Edits the SSH config file
+
+Host server-alias
+    HostName 100.26.171.159
+    User ubuntu
+    IdentifyFile ~/.ssh/school
+    PasswordAuthentication no
