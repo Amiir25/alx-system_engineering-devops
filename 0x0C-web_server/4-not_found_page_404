@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# This script creates a custom 404 error page
+
+# Create a 404 error page
+sudo bash -c 'echo "<html>
+  <head>
+    <title>404 Not Found</title>
+  </head>
+  <body>
+    <h1>404 Not Found</h1>
+    <p>Ceci n'\''est pas une page.</p>
+  </body>
+</html>" > /var/www/html/custome_404.html'
+
+# Configer nginx to use the custom 404 page
+sudo bash -c 'cat > /etc/nginx/sites-available/default' << EOF
+server {
+    listen 80;
+    listen 80 [::]:80;
+
+    root /var/www/html;
+    index index.html;
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+
+    error_page 404 /custom_404.html;
+    location = /custome_404.html {
+        internal;
+    }
+}
+EOF
+
+# Restart nginx without using systemctl
+sudo service nginx stop
+sudo /usr/sbin/nginx
+
+# Verify nginx is running and serving the redirection
+curl -s -o /dev/null -w "%{http_code}" http://localhost/nonexistentpage | grep 404 && echo "404 page configured correctly." || echo "404 configuration failed"
