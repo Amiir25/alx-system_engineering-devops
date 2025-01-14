@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# This Script installs Nginx web server
+
+# Install Nginx
+sudo apt-get install -y nginx
+
+# Configure nginx to return 'Hello, World' at root
+sudo bash -c 'echo "Hello, World!" > /var/www/html/index.html'
+
+# Insure nginx is listening on port 80
+sudo sed -i "s/listen 80 default_server;/listen 80;/" /etc/nginx/sites_available/default
+sudo sed -i "s/listen \[::\]:80 default_server;/listen [::]:80;/" /etc/nginx/sites_available/default
+
+# Restart nginx without using systemctl
+sudo service nginx stop
+sudo /usr/sbin/nginx
+
+# Verify nginx is running and serving the expected content
+curl -s localhost | grep "Hello, World!" && echo "Nginx is configured correctly" || echo "Nginx configuration failed."
