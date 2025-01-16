@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Run Apache on the container and return a page containing 'Hello ALX' when querying the root of it.
+service apache2 start
+service apache2 status
+netstat -tuln | grep :80
+curl 0:8080
