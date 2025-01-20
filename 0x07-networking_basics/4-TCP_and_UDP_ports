@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # Script to display listening ports along with the PID and program name.
 
-ss -ltunp | awk 'NR==1 || /LISTEN/'
+netstat -tuln
