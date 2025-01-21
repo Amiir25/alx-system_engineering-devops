@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Configures an Ubuntu server with localhost = 127.0.0.2 and facebook.com = 8.8.8.8
+
+cat <<EOL >> /etc/hosts
+127.0.0.2 localhost
+8.8.8.8 facebook.com
+EOL
