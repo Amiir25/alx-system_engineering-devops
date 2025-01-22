@@ -1,3 +1,6 @@
+# Installs Flask version 2.1.0 from pip3
+
+# Ensure python3 is installed
 package { 'python3':
     ensure => installed,
 }
