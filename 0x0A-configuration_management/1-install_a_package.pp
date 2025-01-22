@@ -7,7 +7,8 @@ package { 'python3':
 
 # Ensure pip3 is installed
 package { 'python3-pip':
-    ensure => installed,
+    ensure  => installed,
+    require => Package['python3'],
 }
 
 # Install Flask
