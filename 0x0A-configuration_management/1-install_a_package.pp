@@ -12,8 +12,8 @@ package { 'python3-pip':
 }
 
 # Install Flask
-exec { 'install-flask':
-    command => '/usr/bin/pip3 install Flask==2.1.0',
+exec { 'install-flask-and-werkzeug':
+    command => '/usr/bin/pip3 install Flask==2.1.0 Werkzeug==2.0.3',
     path    => ['/usr/bin', '/bin', '/usr/sbin', '/sbin'],
     require => Package['python3-pip'],
     unless  => '/usr/bin/pip3 show Flask | grep -q "Version: 2.1.0"',
