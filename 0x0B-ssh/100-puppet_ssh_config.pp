@@ -3,13 +3,13 @@
 
 file  { '/home/ubuntu/.ssh/config':
   ensure  => 'file',
-  content => @("END"),
+  content => "
     Host server-alias
       HostName 100.26.171.159
       User ubuntu
       IdentifyFile ~/.ssh/school
       PasswordAuthentication no
-    | END
+    ",
   mode    => '0644',    
   owner   => 'ubuntu',
   group   => 'ubuntu',
