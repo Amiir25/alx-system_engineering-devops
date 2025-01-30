@@ -1,12 +1,15 @@
+#!/usr/bin/enc bash
+# Puppet script to install Nginx web server
+
 class nginx_setup {
     package { 'nginx':
         ensure => installed,
     }
 
     service { 'nginx':
-        ensure    => running,
-        enable    => true,
-        require   => Package['nginx'],
+        ensure  => running,
+        enable  => true,
+        require => Package['nginx'],
     }
 
     file { '/var/www/html/index.html':
