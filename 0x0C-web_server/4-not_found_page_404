@@ -1,40 +1,47 @@
 #!/usr/bin/env bash
 # This script creates a custom 404 error page
 
-# Create a 404 error page
-sudo bash -c 'echo "<html>
-  <head>
-    <title>404 Not Found</title>
-  </head>
-  <body>
-    <h1>404 Not Found</h1>
-    <p>Ceci n'\''est pas une page.</p>
-  </body>
-</html>" > /var/www/html/custome_404.html'
+#!/bin/bash
 
-# Configer nginx to use the custom 404 page
-sudo bash -c 'cat > /etc/nginx/sites-available/default' << EOF
+# Update package list and install nginx
+sudo apt update
+sudo apt install -y nginx
+
+# Create the custom 404 error page
+cat <<EOT | sudo tee /var/www/html/custom_404.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>404 Not Found</title>
+</head>
+<body>
+    <h1>Ceci n'est pas une page</h1>
+    <p>The page you are looking for could not be found.</p>
+</body>
+</html>
+EOT
+
+# Configure Nginx to use the custom 404 error page
+sudo tee /etc/nginx/sites-available/default <<EOT
 server {
-    listen 80;
-    listen 80 [::]:80;
+    listen 80 default_server;
+    listen [::]:80 default_server;
 
     root /var/www/html;
-    index index.html;
+    index index.html index.htm;
+
+    server_name _;
 
     location / {
         try_files \$uri \$uri/ =404;
     }
 
     error_page 404 /custom_404.html;
-    location = /custome_404.html {
+    location = /custom_404.html {
         internal;
     }
 }
-EOF
+EOT
 
-# Restart nginx without using systemctl
-sudo service nginx stop
-sudo /usr/sbin/nginx
-
-# Verify nginx is running and serving the redirection
-curl -s -o /dev/null -w "%{http_code}" http://localhost/nonexistentpage | grep 404 && echo "404 page configured correctly." || echo "404 configuration failed"
+# Restart Nginx to apply the changes
+sudo systemctl restart nginx
