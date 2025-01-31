@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
-# SSH config using puppet
+# Puppet manifest to configure SSH client
 
-file  { '/home/ubuntu/.ssh/config':
-  ensure  => 'file',
-  content => "
-    Host server-alias
-      HostName 100.26.171.159
-      User ubuntu
-      IdentifyFile ~/.ssh/school
-      PasswordAuthentication no
-    ",
-  mode    => '0644',    
-  owner   => 'ubuntu',
-  group   => 'ubuntu',
+file_line { 'Declare identity file':
+  path  => '/etc/ssh/ssh_config',
+  line  => 'IdentityFile ~/.ssh/school',
+  match => '^#?IdentityFile',
 }
+
+file_line { 'Turn off passwd auth':
+  path  => '/etc/ssh/ssh_config',
+  line  => 'PasswordAuthentication no',
+  match => '^#?PasswordAuthentication',
+}
+
