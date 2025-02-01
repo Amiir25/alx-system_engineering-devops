@@ -27,4 +27,12 @@ sed -i 's/listen
 nginx -s stop
 nginx
 
+# Check if Nginx is running and listening on port 80
+if curl -s localhost | grep -q "Hello World!"; then
+    echo "Nginx is serving the expected content."
+else
+    echo "Nginx is not serving the expected content."
+fi
+
 echo "Nginx installation and configuration complete. You can test it using curl localhost."
+
