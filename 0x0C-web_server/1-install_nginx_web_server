@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Installes Nginx on server web-01, listening on port 80 and retiurns a page
 # that contains the string 'Hello World'.
 
