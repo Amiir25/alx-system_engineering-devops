@@ -1,27 +1,59 @@
 #!/usr/bin/env bash
 # This script configures nginx to include a redirection for /redirect_me
 
-sudo bash -c 'cat > /etc/nginx/sites-available/default' << EOF
+# Update the package list
+sudo apt-get update -y
+
+# Install Nginx
+sudo apt-get install nginx -y
+
+# Ensure Nginx service is running
+sudo systemctl enable nginx
+sudo systemctl start nginx
+
+# Create a custom index.html file with "Hello World!" content
+echo "Hello World!" | sudo tee /var/www/html/index.html
+
+# Configure Nginx to add a 301 redirect for /redirect_me
+NGINX_CONF="/etc/nginx/sites-available/default"
+
+sudo tee $NGINX_CONF > /dev/null <<EOF
 server {
     listen 80;
-    listen 80 [::]:80;
-
-    root /var/www/html;
-    index index.html;
+    server_name _;
 
     location / {
-        try_files \$uri \$uri/ =404;
+        root /var/www/html;
+        index index.html;
     }
 
     location /redirect_me {
-        return 301 https://www.example.com
+        return 301 https://www.example.com;  # Change to your desired URL
     }
 }
 EOF
 
-# Restart nginx without using systemctl
-sudo service nginx stop
-sudo /usr/sbin/nginx
+# Ensure the firewall allows HTTP traffic
+sudo ufw allow 80/tcp
+sudo ufw reload
 
-# Verify nginx is running and serving the redirection
-curl -s -o /dev/null -w "%{http_code}" http://localhost/redirect_me | grep 301 && echo "Redirection configured correctly." || echo "Redirection configuration failed"
+# Restart Nginx to apply changes
+nginx -s stop
+nginx
+
+# Check if Nginx is running and listening on port 80
+if curl -s localhost | grep -q "Hello World!"; then
+    echo "Nginx is serving the expected content."
+else
+    echo "Nginx is not serving the expected content."
+fi
+
+# Check if /redirect_me returns a 301 response
+REDIRECT_STATUS=$(curl -o /dev/null -s -w "%{http_code}" -L -I http://localhost/redirect_me)
+if [ "$REDIRECT_STATUS" == "301" ]; then
+    echo "/redirect_me is correctly set up as a 301 redirect."
+else
+    echo "Error: /redirect_me is not redirecting properly."
+fi
+
+echo "Nginx installation and configuration complete. You can test it using curl localhost and curl -I localhost/redirect_me."
