@@ -3,25 +3,21 @@
 # that contains the string 'Hello World'.
 
 # Update the package list
-apt-get update -y
+sudo apt-get update -y
 
 # Install Nginx
-apt-get install nginx -y
+sudo apt-get install nginx -y
+
+# Ensure Nginx service is running
+sudo systemctl enable nginx
+sudo systemctl start nginx
 
 # Create a custom index.html file with "Hello World!" content
-echo "Hello World!" > /var/www/html/index.html
+echo "Hello World!" | sudo tee /var/www/html/index.html
 
-# Ensure Nginx is listening on port 80
-sed -i 's/listen 80 default_server;/listen 80;/' /etc/nginx/sites-available/default
-sed -i 's/listen 
-
-\[::\]
-
-:80 default_server;/listen 
-
-\[::\]
-
-:80;/' /etc/nginx/sites-available/default
+# Ensure the firewall allows HTTP traffic
+sudo ufw allow 80/tcp
+sudo ufw reload
 
 # Restart Nginx to apply changes (without using systemctl)
 nginx -s stop
