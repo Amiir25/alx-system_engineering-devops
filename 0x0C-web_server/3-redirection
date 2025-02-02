@@ -56,4 +56,3 @@ else
     echo "Error: /redirect_me is not redirecting properly."
 fi
 
-echo "Nginx installation and configuration complete. You can test it using curl localhost and curl -I localhost/redirect_me."
