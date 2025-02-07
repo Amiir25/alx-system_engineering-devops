@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # This script configures a new Ubuntu machine to include a custom HTTP response header
 
 # Update and install Nginx
