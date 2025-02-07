@@ -2,7 +2,7 @@
 # Edits the SSH config file
 
 Host server-alias
-    HostName 100.26.171.159
+    HostName 54.175.138.51
     User ubuntu
     IdentifyFile ~/.ssh/school
     PasswordAuthentication no
