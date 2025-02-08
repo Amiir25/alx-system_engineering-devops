@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # Fixing Nginx installation from listening on port 80.
 
-#!/bin/bash
-
 # Update packages
 apt update -y
 
