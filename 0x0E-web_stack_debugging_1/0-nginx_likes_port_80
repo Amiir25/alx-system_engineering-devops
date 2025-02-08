@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Update system package
+apt update -y
+
+# Install nginx
+apt install -y nginx
+
+# Ensure nginx listens on all IPv4 interfaces
+cat <<EOF > /etc/nginx/sites-available/default
+server {
+    listen 80;
+    server_name_;
+    root /var/www/html;
+    index index.html;
+}
+EOF
+
+# Restart nginx
+systemctl restart nginx
+
+# Ensure Firewall allows port 80
+ufw allow 80/tcp || iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+
+# Enable and start nginx
+systemctl enable nginx
+systemctl start nginx
