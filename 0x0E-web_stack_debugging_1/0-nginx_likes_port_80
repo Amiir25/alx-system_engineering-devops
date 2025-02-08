@@ -1,28 +1,38 @@
 #!/usr/bin/env bash
 # Fixing Nginx installation from listening on port 80.
 
-# Update system package
+#!/bin/bash
+
+# Update packages
 apt update -y
 
-# Install nginx
+# Install Nginx if not installed
 apt install -y nginx
 
-# Ensure nginx listens on all IPv4 interfaces
+# Ensure Nginx listens on port 80
 cat <<EOF > /etc/nginx/sites-available/default
 server {
     listen 80;
-    server_name_;
+    server_name _;
     root /var/www/html;
     index index.html;
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
 }
 EOF
 
-# Restart nginx
+# Restart Nginx
 systemctl restart nginx
 
-# Ensure Firewall allows port 80
+# Ensure a test page exists
+echo "<h1>Nginx is working!</h1>" > /var/www/html/index.html
+chown -R www-data:www-data /var/www/html
+chmod -R 755 /var/www/html
+
+# Open port 80 in firewall
 ufw allow 80/tcp || iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 
-# Enable and start nginx
+# Enable and start Nginx
 systemctl enable nginx
 systemctl start nginx
