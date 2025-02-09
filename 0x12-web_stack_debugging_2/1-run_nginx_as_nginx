@@ -1,15 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Runs nginx as nginx user listening on all active Ips on port 8080
 
 # Ensure the script runs as root
 if [ "$(id -u)" -ne 0 ]; then
     echo "This script must be run as root or with sudo."
     exit 1
-fi
-
-# Install nginx if not installed
-if ! command -v nginx &> /dev/null; then
-    echo "Installing nginx..."
-    apt-get update && apt-get install -y nginx
 fi
 
 # Ensure the nginx user exists
