@@ -1,0 +1,32 @@
+# Function to get subdomain information
+get_subdomain_info() {
+    local subdomain=$1
+    local domain=$2
+    
+    result=$(dig +short "$subdomain.$domain" | tail -n1)
+    
+    if [[ -n "$result" ]]; then
+        echo "The subdomain $subdomain is a A record and points to $result"
+    else
+        echo "No A record found for $subdomain.$domain"
+    fi
+}
+
+# Check if at least the domain parameter is provided
+if [[ -z "$1" ]]; then
+    echo "Usage: $0 <domain> [subdomain]"
+    exit 1
+fi
+
+domain=$1
+subdomain=$2
+
+# If a specific subdomain is provided, check only that subdomain
+if [[ -n "$subdomain" ]]; then
+    get_subdomain_info "$subdomain" "$domain"
+else
+    # Check default subdomains in the specified order
+    for sub in www lb-01 web-01 web-02; do
+        get_subdomain_info "$sub" "$domain"
+    done
+fi
