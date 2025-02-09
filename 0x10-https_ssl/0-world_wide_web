@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+#Displays information about domains and subdomains passed as an arguement
+
 # Function to get subdomain information
 get_subdomain_info() {
     local subdomain=$1
