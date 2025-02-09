@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Ensure the script runs as root
+if [ "$(id -u)" -ne 0 ]; then
+    echo "This script must be run as root or with sudo."
+    exit 1
+fi
+
+# Install nginx if not installed
+if ! command -v nginx &> /dev/null; then
+    echo "Installing nginx..."
+    apt-get update && apt-get install -y nginx
+fi
+
+# Ensure the nginx user exists
+if ! id "nginx" &>/dev/null; then
+    echo "Creating nginx user..."
+    useradd -r -d /var/www -s /sbin/nologin nginx
+fi
+
+# Update nginx configuration to listen on port 8080
+NGINX_CONF="/etc/nginx/sites-available/default"
+
+if [ -f "$NGINX_CONF" ]; then
+    sed -i 's/listen 80 default_server;/listen 8080 default_server;/g' "$NGINX_CONF"
+    sed -i 's/listen \[::\]:80 default_server;/listen \[::\]:8080 default_server;/g' "$NGINX_CONF"
+else
+    echo "Error: nginx configuration file not found."
+    exit 1
+fi
+
+# Change ownership to nginx user
+chown -R nginx:nginx /var/www/html
+
+# Ensure nginx runs as the nginx user
+sed -i 's/^user .*/user nginx;/g' /etc/nginx/nginx.conf
+
+# Restart nginx to apply changes
+echo "Restarting nginx..."
+systemctl restart nginx
+
+# Verify nginx is running as nginx user
+if ps aux | grep "[n]ginx" | grep -q "nginx"; then
+    echo "Nginx is running as nginx user."
+else
+    echo "Nginx is not running as nginx user. Check logs."
+    exit 1
+fi
+
+# Verify nginx is listening on port 8080
+if nc -z 0 8080; then
+    echo "Nginx is listening on port 8080."
+else
+    echo "Nginx is not listening on port 8080. Check configuration."
+    exit 1
+fi
+
+echo "Configuration complete!"
