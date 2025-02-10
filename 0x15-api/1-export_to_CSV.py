@@ -30,8 +30,8 @@ if __name__ == "__main__":
     else:
         user_data = user_response.json()
 
-    # Extract the name of the user
-    user_name = user_data["name"]
+    # Extract the username
+    user_name = user_data["username"]
 
     # GET request to fetch TODO List
     todo_response = requests.get(f"{TODO_LIST_API}?userId={id}")
