@@ -5,7 +5,7 @@
 Gather ingormation about TODO List progress of a user
 '''
 
-import request
+import requests
 import sys
 
 
@@ -45,6 +45,6 @@ if __name__ == "__main__":
     TASK_TITLE = [task["title"] for task in todo_list if task["completed"]]
 
     # Print
-    print(f"Employee {user_name} is done with tasks {NUMBER_OF_TASKS_DONE}/{TOTAL_NUMBER_OF_TASKS}:")
+    print(f"Employee {user_name} is done with tasks {NUMBER_OF_DONE_TASKS}/{TOTAL_NUMBER_OF_TASKS}:")
     for i in range(NUMBER_OF_DONE_TASKS):
-        print("\t {TASK_TITLE}")
+        print(f"\t {TASK_TITLE}")
