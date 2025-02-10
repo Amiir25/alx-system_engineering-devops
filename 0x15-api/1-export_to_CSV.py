@@ -51,14 +51,10 @@ if __name__ == "__main__":
     # Create the CSV file
     file_name = f"{id}.csv"
     with open(file_name, mode='w', newline='') as file:
-        writer = csv.writer(file)
+        writer = csv.writer(file, quoting=csv.QUOTE_ALL)
 
         # Print
         for task in todo_list:
-            row = [
-                f'"{id}"',
-                f'"{user_name}"',
-                f'"{task["completed"]}"',
-                f'"{task["title"]}"'
-            ]
-            file.write(", ".join(row) + "\n")
+            writer.writerow(
+                [id, user_name, task["completed"], task["title"]]
+            )
