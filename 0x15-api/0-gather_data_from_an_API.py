@@ -47,7 +47,9 @@ if __name__ == "__main__":
     NUMBER_OF_DONE_TASKS = len(TASK_TITLE)
 
     # Print
-    print(f"Employee {user_name} is done with tasks {
-        NUMBER_OF_DONE_TASKS}/{TOTAL_NUMBER_OF_TASKS}: ")
+    print(
+        f"Employee {user_name} is done with tasks"
+        "{NUMBER_OF_DONE_TASKS}/{TOTAL_NUMBER_OF_TASKS}: "
+    )
     for task in TASK_TITLE:
         print(f"\t {task}")
