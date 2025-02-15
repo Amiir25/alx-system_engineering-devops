@@ -46,7 +46,6 @@ if __name__ == "__main__":
     TASK_TITLE = [task["title"] for task in todo_list if task["completed"]]
     NUMBER_OF_DONE_TASKS = len(TASK_TITLE)
 
-    # Print
     print(
         f"Employee {user_name} is done with tasks"
         f"({NUMBER_OF_DONE_TASKS}/{TOTAL_NUMBER_OF_TASKS}):"
