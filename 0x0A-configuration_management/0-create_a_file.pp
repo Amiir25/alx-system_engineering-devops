@@ -1,4 +1,4 @@
-# Creates a file in /tmp using Puppet
+# This script creates a file in /tmp using Puppet
 
 file {'/tmp':
     ensure => 'directory',
