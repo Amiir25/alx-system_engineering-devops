@@ -2,7 +2,7 @@
 '''
 3-dictionary_of_list_of_dictionaries.py
 
-Records all tasks of all users and exports in a JSON format
+This script records all tasks of all users and exports in a JSON format
 '''
 
 import json
