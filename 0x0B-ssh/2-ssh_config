@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # Edits the SSH config file
-
 Host server-alias
     HostName 54.175.138.51
     User ubuntu
