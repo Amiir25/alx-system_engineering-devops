@@ -1,3 +1,4 @@
+# This code automates the solution to fix the Apache 500 error using strace.
 class apache_fix {
 
   # Ensure correct ownership and permissions
@@ -23,9 +24,9 @@ class apache_fix {
 
   # Ensure Apache service is running and enabled
   service { 'apache2':
-    ensure    => running,
-    enable    => true,
-    require   => Package['apache2'],
+    ensure  => running,
+    enable  => true,
+    require => Package['apache2'],
   }
 }
 
