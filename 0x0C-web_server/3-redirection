@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This script configures nginx to include a redirection for /redirect_me
+# This script configures nginx server to include a redirection for /redirect_me
 
 # Update the package list
 sudo apt-get update -y
