@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Installes Nginx on server web-01, listening on port 80 and returns
-# a page that contains the string 'Hello World'.
+# This script installes Nginx on server web-01, listening on port 80
+# and returns a page that contains the string 'Hello World'.
 
 # Update the package list
 sudo apt-get update -y
