@@ -2,8 +2,6 @@
 # This script creates a custom 404 error page that contains the string
 # 'Ceci n'est pas une page'.
 
-#!/bin/bash
-
 # Update the package list
 sudo apt-get update -y
 
