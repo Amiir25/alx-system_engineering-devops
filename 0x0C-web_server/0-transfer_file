@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This script transfers file from client to server
+# This module contains a script that transfers file from client to server
 
 # Function to display usage
 usage() {
